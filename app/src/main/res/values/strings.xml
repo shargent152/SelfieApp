@@ -3,4 +3,5 @@
     <string name="shake_phone_to_access_selfie_camera_or_tap_on_a_photo">SHAKE PHONE TO ACCESS SELFIE CAMERA OR TAP ON A PHOTO</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go_back">Go Back</string>
 </resources>
