@@ -37,7 +37,7 @@ class full_screen_picture : Fragment() {
         val img = view.findViewById<ImageView>(R.id.bigboy2)
         val picLink = Firebase.storage.reference.child("images/" + link)
         Glide.with(view.context).load(picLink).into(img)
-        Toast.makeText(context,"Tap Image To go Back",Toast.LENGTH_SHORT).show()
+        Toast.makeText(context,"Tap Image To go Back or Shake Screen to Take Selfie",Toast.LENGTH_SHORT).show()
         img.setOnClickListener {
             val back = FirstScreen()
             activity?.supportFragmentManager!!.beginTransaction().apply {
