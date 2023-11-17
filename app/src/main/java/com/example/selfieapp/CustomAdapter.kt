@@ -1,5 +1,6 @@
 package com.example.selfieapp
 
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,19 +18,18 @@ import com.google.firebase.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.storage
 
-class CustomAdapter(private val dataSet: MutableList<String>) :
+class CustomAdapter(private val dataSet: MutableList<String>, val clickListner: ItemClickListner) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        val firepic = view.findViewById<ImageButton>(R.id.firebasepic)
         fun bind(pic: String){
             Log.i("beep boop","image/" + pic)
-            val firepic = view.findViewById<ImageButton>(R.id.firebasepic)
+
             val picLink = Firebase.storage.reference.child("images/" + pic)
             val bigfirepic = view.findViewById<ImageView>(R.id.bigboy)
             Glide.with(view.context).load(picLink).into(firepic)
-            firepic.setOnClickListener {
-                Inten
-                Glide.with(view.context).load(picLink).into(bigfirepic)
-            }
+
         }
     }
 
@@ -44,10 +44,15 @@ class CustomAdapter(private val dataSet: MutableList<String>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.bind(dataSet[position])
+        viewHolder.firepic.setOnClickListener {
+            clickListner.onItemClick(dataSet[position])
+        }
     }
 
     override fun getItemCount() = dataSet.size
 
-
+    interface ItemClickListner{
+        fun onItemClick(imageLink: String)
+    }
 
 }

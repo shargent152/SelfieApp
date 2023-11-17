@@ -21,7 +21,7 @@ import com.google.firebase.storage.storage
  * Use the [FirstScreen.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FirstScreen : Fragment() {
+class FirstScreen : Fragment(), CustomAdapter.ItemClickListner {
     private lateinit var recycle: RecyclerView
     private lateinit var manager: RecyclerView.LayoutManager
     private lateinit var myAdapter: RecyclerView.Adapter<*>
@@ -46,18 +46,33 @@ class FirstScreen : Fragment() {
             manager = LinearLayoutManager(view.context)
             recycle = view.findViewById<RecyclerView>(R.id.recycle).apply {
                 layoutManager = manager
-                myAdapter = CustomAdapter(pics)
+                myAdapter = CustomAdapter(pics,this@FirstScreen)
                 adapter = myAdapter
+            }
+            recycle.setOnClickListener {
+                val full = full_screen_picture()
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.holder,full)
+                    commit()
+                }
             }
 
         }
             .addOnFailureListener {
                 Log.e("error", "I failed")
             }
+
         return view
     }
-    fun viewModelRunner(link: StorageReference){
-        val viewModel : storageViewModel = ViewModelProvider(requireActivity()).get(storageViewModel::class.java)
-        viewModel.selectLink(link)
+
+    override fun onItemClick(imageLink: String) {
+        val full = full_screen_picture.newInstance(imageLink)
+        activity?.supportFragmentManager!!.beginTransaction().apply {
+            hide(activity?.supportFragmentManager!!.findFragmentByTag("First_Screen")!!)
+            add(R.id.holder,full,"Full_Screen")
+            commit()
+        }
     }
+
+
 }

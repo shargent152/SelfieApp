@@ -26,16 +26,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.holder,FirstScreen())
+            replace(R.id.holder,FirstScreen(),"First_Screen")
             commit()
         }
-        val viewModel: storageViewModel = ViewModelProvider(this).get(storageViewModel::class.java)
-        viewModel.selectedLink.observe(this){
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.holder,full_screen_picture())
-                commit()
-            }
-        }
+
     }
 
 
